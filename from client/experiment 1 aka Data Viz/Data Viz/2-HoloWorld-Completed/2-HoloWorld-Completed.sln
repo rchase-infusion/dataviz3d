@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{D51B1578-AFEE-DE9B-4F30-EFA9ED0DF9B2}") = "2-HoloWorld-Completed", "Assembly-CSharp.csproj", "{28F30ED6-D817-0D88-7361-7B530C66620D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28F30ED6-D817-0D88-7361-7B530C66620D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F30ED6-D817-0D88-7361-7B530C66620D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F30ED6-D817-0D88-7361-7B530C66620D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F30ED6-D817-0D88-7361-7B530C66620D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
