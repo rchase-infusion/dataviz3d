@@ -1,0 +1,1 @@
+C:\Users\Ashley\Documents\HOLOLENS\Data Viz\2-HoloWorld-Completed\UWP\Assembly-CSharp-firstpass\obj\x86\Release\x86\Release\Assembly-CSharp-firstpass.csprojResolveAssemblyReference.cache
