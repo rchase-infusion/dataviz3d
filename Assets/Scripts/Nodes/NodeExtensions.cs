@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Nodes
+﻿using System.Linq;
+
+namespace Assets.Scripts.Nodes
 {
     public static class NodeExtensions
     {
@@ -8,6 +10,7 @@
             node.Name = rowData.Name;
             node.Description = rowData.Description;
             node.Type = rowData.Type;
+            node.EdgesRawData = rowData.Edges.ToArray();
         }
     }
 }

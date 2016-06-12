@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Edges;
+using UnityEngine;
 
 namespace Assets.Scripts.Nodes
 {
@@ -9,6 +10,6 @@ namespace Assets.Scripts.Nodes
         public string Description;
         public NodeType Type;
 
-        public Node[] Relations;
+        public EdgeRawData[] EdgesRawData;
     }
 }

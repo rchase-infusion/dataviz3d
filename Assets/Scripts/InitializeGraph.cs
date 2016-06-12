@@ -6,20 +6,21 @@ namespace Assets.Scripts
     public class InitializeGraph : MonoBehaviour
     {
         private INodeDataReader _nodeDataReader;
-        private INodeGenerator _nodeGenerator;
+        private IGraphGenerator _graphGenerator;
 
         void Start()
         {
             _nodeDataReader = new NodeDataReader();
-            _nodeGenerator = new NodeGenerator(GameObject.Find("GRAPH"));
+            _graphGenerator = new GraphGenerator(GameObject.Find("NODES"), GameObject.Find("EDGES"));
 
             Initialize();
         }
 
         private void Initialize()
         {
-            var nodes = _nodeDataReader.Read();
-            _nodeGenerator.GenerateNodes(nodes);
+            var nodesRawData = _nodeDataReader.Read();
+            var nodes = _graphGenerator.GenerateNodes(nodesRawData);
+            _graphGenerator.GenerateEdges(nodes);
         }
     }
 }

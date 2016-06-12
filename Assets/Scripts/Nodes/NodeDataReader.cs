@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Edges;
 using UnityEngine;
 
 namespace Assets.Scripts.Nodes
@@ -15,33 +16,66 @@ namespace Assets.Scripts.Nodes
             string graphData = graphDataFile.text;
             var lines = graphData.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
+            NodeRawData lastNodeRawData = null;
             foreach (var currentLine in lines)
             {
-                results.Add(ToNodeRawData(currentLine));
+                var fields = currentLine.Split(';');
+                if (fields[0].Equals("N")) // N like Node
+                {
+                    if (lastNodeRawData != null)
+                        results.Add(lastNodeRawData);
+
+                    lastNodeRawData = ToNodeRawData(fields);
+                }
+                else if (fields[0].Equals("E")) // E like Edge
+                {
+                    if (lastNodeRawData == null)
+                        throw new InvalidOperationException("[NodeDataReader] lastNodeRawData is null! First line of graph_data.csv is of Edge type?");
+
+                    lastNodeRawData.Edges.Add(ToEdgeRawData(fields));
+                }
             }
+
+            if (lastNodeRawData != null)
+                results.Add(lastNodeRawData);
 
             return results;
         }
 
-        private NodeRawData ToNodeRawData(string line)
+        private NodeRawData ToNodeRawData(string[] fields)
         {
-            var fields = line.Split(';');
-
             var nodeRawData = new NodeRawData()
             {
-                Id = ToInt(fields[0]),
-                Type = fields[1].ToNodeType(),
-                Name = fields[2],
-                Description = fields[3],
-                Position = ToVector3(fields[4])
+                Id = ToInt(fields[1]),
+                Type = fields[2].ToNodeType(),
+                Name = fields[3],
+                Description = fields[4],
+                Position = ToVector3(fields[5])
             };
 
             return nodeRawData;
         }
 
+        private EdgeRawData ToEdgeRawData(string[] fields)
+        {
+            var edgeRawData = new EdgeRawData()
+            {
+                Type = fields[1],
+                NodeId = ToInt(fields[2]),
+                Data = ToFloat(fields[3])
+            };
+
+            return edgeRawData;
+        }
+
         private int ToInt(string value)
         {
             return Int32.Parse(value);
+        }
+
+        private float ToFloat(string value)
+        {
+            return float.Parse(value);
         }
 
         private Vector3 ToVector3(string value)
