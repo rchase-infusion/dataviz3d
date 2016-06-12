@@ -1,12 +1,12 @@
-1;Person;Mark Lewis;Employee of the Month;4,4,12
+1;Person;Mark Lewis;Employee of the Month;4,1,12
 2;Organisation;CorPo Corp;The best corpo in the world!;4,-3,20
 3;Product;iproduct;This is a revolution!;4,-3,16
 1;Person;Mark Lewis;Employee of the Month;3,12,12
 2;Organisation;CorPo Corp;The best corpo in the world!;10,-5,20
 3;Product;iproduct;This is a revolution!;1,-7,16
-1;Person;Mark Lewis;Employee of the Month;-4,4,12
+1;Person;Mark Lewis;Employee of the Month;-4,2,12
 2;Organisation;CorPo Corp;The best corpo in the world!;-4,-3,18
 3;Product;iproduct;This is a revolution!;-7,-3,16
-1;Person;Mark Lewis;Employee of the Month;-3,12,12
+1;Person;Mark Lewis;Employee of the Month;-3,-2,12
 2;Organisation;CorPo Corp;The best corpo in the world!;-10,-5,17
 3;Product;iproduct;This is a revolution!;1,-7,16
