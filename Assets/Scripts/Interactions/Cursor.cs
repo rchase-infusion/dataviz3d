@@ -9,15 +9,13 @@ namespace Assets.Scripts.Interactions
         private Camera _camera;
         private MeshRenderer _meshRenderer;
 
-        public float MaxHitDetectionDistance = 5;
-        public Color DefaultColor = Color.white;
+        public float MaxHitDetectionDistance = 30;
         public Color HoverColor = Color.red;
         
         void Start()
         {
             _camera = Camera.main;
             _meshRenderer = gameObject.GetComponent<MeshRenderer>();
-            _meshRenderer.material.color = DefaultColor;
         }
 
         void Update()
@@ -31,6 +29,7 @@ namespace Assets.Scripts.Interactions
                 gameObject.SetPosition(hit.point);
                 gameObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
                 _meshRenderer.enabled = true;
+                _meshRenderer.material.color = HoverColor;
             }
             else
             {

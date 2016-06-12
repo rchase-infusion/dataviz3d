@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Timers;
 using UnityEngine;
 
 namespace Assets.Scripts.Interactions
 {
     public class MoveCamera : MonoBehaviour
     {
-        [Tooltip("Speed at which the camera looks left/right")]
+        [Tooltip("Speed at which the camera looks left/right.")]
         public float HorizontalLookSpeed = 50;
-        [Tooltip("Speed at which the camera looks up/down")]
+        [Tooltip("Speed at which the camera looks up/down.")]
         public float VerticalLookSpeed = 50;
+        [Tooltip("Speed at which the camera strafes left/right.")]
+        public float StrafeSpeed = 10;
+        [Tooltip("Speed at which the camera moves forward/backward.")]
+        public float MoveSpeed = 10;
 
         private void Start()
         { }
@@ -19,6 +24,27 @@ namespace Assets.Scripts.Interactions
             {
                 LookLeftRight();
                 LookUpDown();
+            }
+
+            MoveForwardBackward();
+            MoveLeftRight();
+        }
+
+        private void MoveForwardBackward()
+        {
+            var moveInput = Input.GetAxis("Vertical");
+            if (Math.Abs(moveInput) > 0.1)
+            {
+                transform.position += transform.forward * moveInput * MoveSpeed * Time.deltaTime;
+            }
+        }
+
+        private void MoveLeftRight()
+        {
+            var strafeInput = Input.GetAxis("Horizontal");
+            if (Math.Abs(strafeInput) > 0.1)
+            {
+                transform.position += transform.right * strafeInput * StrafeSpeed * Time.deltaTime;
             }
         }
 
