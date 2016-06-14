@@ -19,7 +19,7 @@ namespace Assets.Scripts.Utils
 		public static Vector3 ToVector3(this string value)
 		{
 			var coordinates = value.Split(',');
-			return new Vector3(coordinates[0].ToInt(), coordinates[1].ToInt(), coordinates[2].ToInt());
+			return new Vector3(coordinates[0].ToFloat(), coordinates[1].ToFloat(), coordinates[2].ToFloat());
 		}
 
 		public static float ToFloat(this string value)

@@ -33,10 +33,10 @@ namespace Assets.Scripts.Interactions
             RaycastHit hit;
             if (Physics.Raycast(cameraPosition, forwardDirection, out hit, MaxHitDetectionDistance))
             {
-                gameObject.SetPosition(hit.point);
-                gameObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-                _meshRenderer.enabled = true;
-                _meshRenderer.material.color = HoverColor;
+//                gameObject.SetPosition(hit.point);
+//                gameObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+//                _meshRenderer.enabled = true;
+//                _meshRenderer.material.color = HoverColor;
 
                 var collidedGameObject = hit.collider.gameObject;
                 if (collidedGameObject.IsGraphNode() && collidedGameObject != _currentlySelectedNode)
