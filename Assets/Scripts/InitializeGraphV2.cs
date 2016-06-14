@@ -27,23 +27,35 @@ namespace Assets.Scripts
             var nodesRawData = _nodeDataReader.Read();
             _nodes = _graphGenerator.GenerateNodes(nodesRawData);
 
-            LoadFirstSeries();
+            LoadSeries1();
         }
 
-        public void LoadFirstSeries()
+        public void LoadSeries1()
         {
             LoadSeries("graph_data_edges_series_1");
         }
 
-        public void LoadSecondSeries()
+        public void LoadSeries2()
         {
             LoadSeries("graph_data_edges_series_2");
         }
 
         private void LoadSeries(string filename)
         {
+            ClearAllEdges();
+            
             var edgesRawData = _edgeDataReader.Read(filename);
             _graphGenerator.GenerateEdges(_nodes, edgesRawData);
+        }
+
+        private void ClearAllEdges()
+        {
+            var edgesContainer = GameObject.Find("EDGES");
+
+            foreach (Transform edge in edgesContainer.transform)
+            {
+                GameObject.Destroy(edge.gameObject);
+            }
         }
     }
 }
