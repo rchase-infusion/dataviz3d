@@ -10,7 +10,7 @@ namespace Assets.Scripts.Nodes
     public interface IGraphGeneratorV2
     {
         IEnumerable<GameObject> GenerateNodes(IEnumerable<NodeRawDataV2> rowData);
-        void GenerateEdges(IEnumerable<GameObject> nodes);
+        void GenerateEdges(IEnumerable<GameObject> nodes, IEnumerable<EdgeRawDataV2> rowData);
     }
 
     public class GraphGeneratorV2 : IGraphGeneratorV2
@@ -29,19 +29,21 @@ namespace Assets.Scripts.Nodes
             return rowData.Select(data => GenerateNode(data)).ToList();
         }
 
-        public void GenerateEdges(IEnumerable<GameObject> nodes)
+        public void GenerateEdges(IEnumerable<GameObject> nodes, IEnumerable<EdgeRawDataV2> rowData)
         {
             var nodesList = nodes.ToList();
-            foreach (var node in nodesList)
+            foreach (var edgeRawData in rowData)
             {
-                GenerateEdges(nodesList, node);
+                var parentNode = FindNode(nodesList, edgeRawData.ParentNodeId);
+                var childNode = FindNode(nodesList, edgeRawData.ChildNodeId);
+
+                GenerateEdge(edgeRawData, parentNode, childNode);
             }
         }
 
         private GameObject GenerateNode(NodeRawDataV2 nodeRawData)
         {
             var resourceName = "node_" + nodeRawData.Shape;
-
             var gameObject = MonoBehaviour.Instantiate(Resources.Load(resourceName)) as GameObject;
 
             // Initialize Node component
@@ -53,37 +55,20 @@ namespace Assets.Scripts.Nodes
             gameObject.SetPosition(nodeRawData.Position);
             gameObject.SetSize(nodeRawData.Size);
             gameObject.SetColor(nodeRawData.Color);
-            
-            return new GameObject();
+
+            return gameObject;
         }
 
-        private void GenerateEdges(IEnumerable<GameObject> nodes, GameObject nodeGameObject)
+        private void GenerateEdge(EdgeRawDataV2 rowData, GameObject parent, GameObject child)
         {
-            var node = nodeGameObject.GetComponent<Node>();
-
-            foreach (var edgeRawData in node.EdgesRawData)
-            {
-                var child = nodes.First(n => n.GetComponent<Node>().Id == edgeRawData.NodeId);
-                GenerateEdge(edgeRawData, nodeGameObject, child);
-            }
-        }
-
-        private void GenerateEdge(EdgeRawData rowData, GameObject parent, GameObject child)
-        {
-            var edgeGameObject = new GameObject(FormatEdgeName(parent, child));
+            var edgeGameObject = new GameObject(FormatEdgeName(rowData.Id, parent, child));
             edgeGameObject.SetParent(_edgesContainer);
 
-            var edge = edgeGameObject.AddComponent<Edge>();
+            // Initialize the edge component
+            var edge = edgeGameObject.AddComponent<EdgeV2>();
             edge.InitializeFrom(rowData, parent, child);
-
-            var lineRenderer = edgeGameObject.AddComponent<LineRenderer>();
-            lineRenderer.SetWidth(0.05f, 0.05f);
-            lineRenderer.SetColors(Color.red, Color.red);
-            lineRenderer.SetVertexCount(2);
-            
-            // Draw edge
-            lineRenderer.SetPosition(0, parent.transform.position);
-            lineRenderer.SetPosition(1, child.transform.position);
+            // Draw the edge
+            edge.Draw();
         }
 
         private string FormatNodeName(NodeV2 node)
@@ -91,9 +76,14 @@ namespace Assets.Scripts.Nodes
             return node.Id + " - " + node.Name;
         }
 
-        private string FormatEdgeName(GameObject parent, GameObject child)
+        private string FormatEdgeName(int edgeId, GameObject parent, GameObject child)
         {
-            return String.Format("Edge - {0} | {1}", parent.name, child.name);
+            return String.Format("{0}: {1} -> {2}", edgeId, parent.name, child.name);
+        }
+
+        private GameObject FindNode(IEnumerable<GameObject> nodes, int nodeId)
+        {
+            return nodes.FirstOrDefault(n => n.GetComponent<NodeV2>().Id == nodeId);
         }
     }
 }

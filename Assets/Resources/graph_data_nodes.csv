@@ -1,6 +1,6 @@
-1;Firm 1;some description;1.0;Red;Cube;4,-3,7
-2;Client 1;some description;2.0;Green;Sphere;2,3,12
-3;Product 1;some description;1.0;Yellow;Cylinder;5,-4,10
-4;Firm 2;some description;0.5;Red;Cube;5,-7,12
-5;Client 2;some description;0.7;Cyan;Sphere;-2,3,5
-6;Product 2;some description;2.0;Yellow;Sphere;1,-5,15
+1;Firm 1;some description;1.0;red;Cube;4,-3,7
+2;Client 1;some description;2.0;magenta;Sphere;2,3,12
+3;Product 1;some description;1.0;yellow;Cylinder;5,-4,10
+4;Firm 2;some description;0.5;red;Cube;5,-7,12
+5;Client 2;some description;0.7;cyan;Sphere;-2,3,5
+6;Product 2;some description;2.0;yellow;Sphere;1,-5,15

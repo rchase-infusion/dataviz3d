@@ -2,8 +2,8 @@
 {
     public class EdgeRawData
     {
-        public int NodeId;
-        public string Type;
-        public float Data;
+        public int NodeId { get; set; }
+        public string Type { get; set; }
+        public float Data { get; set; }
     }
 }
