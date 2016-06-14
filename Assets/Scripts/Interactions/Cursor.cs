@@ -10,16 +10,19 @@ namespace Assets.Scripts.Interactions
         private MeshRenderer _meshRenderer;
         private GameObject _currentlySelectedNode;
         private Material _currentlySelectedNodeOriginalMaterial;
-        private Material _selectedNodeMaterial;
-        
-        public float MaxHitDetectionDistance = 30;
-        public Color HoverColor = Color.red;
+
+        [Tooltip("The material applied to the currently selected node. Defaults to 'SelectedNodeMaterial asset from the Resources folder' if not set")]
+        public Material SelectedNodeMaterial;
+        public float MaxHitDetectionDistance;
+        public Color HoverColor;
         
         void Start()
         {
             _camera = Camera.main;
             _meshRenderer = gameObject.GetComponent<MeshRenderer>();
-            _selectedNodeMaterial = Resources.Load("SelectedNodeMaterial") as Material;
+            
+            if (SelectedNodeMaterial == null)
+                SelectedNodeMaterial = Resources.Load("SelectedNodeMaterial") as Material;
         }
 
         void Update()
@@ -57,7 +60,7 @@ namespace Assets.Scripts.Interactions
             var meshRenderer = _currentlySelectedNode.GetComponent<MeshRenderer>();
 
             _currentlySelectedNodeOriginalMaterial = meshRenderer.material;
-            meshRenderer.material = _selectedNodeMaterial;
+            meshRenderer.material = SelectedNodeMaterial;
         }
 
         private void ResetSelectedNode()

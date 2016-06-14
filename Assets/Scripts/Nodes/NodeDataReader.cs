@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.Edges;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts.Nodes
@@ -46,11 +47,11 @@ namespace Assets.Scripts.Nodes
         {
             var nodeRawData = new NodeRawData()
             {
-                Id = ToInt(fields[1]),
+                Id = fields[1].ToInt(),
                 Type = fields[2].ToNodeType(),
                 Name = fields[3],
                 Description = fields[4],
-                Position = ToVector3(fields[5])
+                Position = fields[5].ToVector3()
             };
 
             return nodeRawData;
@@ -61,35 +62,11 @@ namespace Assets.Scripts.Nodes
             var edgeRawData = new EdgeRawData()
             {
                 Type = fields[1],
-                NodeId = ToInt(fields[2]),
-                Data = ToFloat(fields[3])
+                NodeId = fields[2].ToInt(),
+                Data = fields[3].ToFloat()
             };
 
             return edgeRawData;
-        }
-
-        private int ToInt(string value)
-        {
-            return Int32.Parse(value);
-        }
-
-        private float ToFloat(string value)
-        {
-            return float.Parse(value);
-        }
-
-        private Vector3 ToVector3(string value)
-        {
-            var coordinates = value.Split(',');
-            return new Vector3(ToInt(coordinates[0]), ToInt(coordinates[1]), ToInt(coordinates[2]));
-        }
-    }
-
-    public static class NodeTypeExtensions
-    {
-        public static NodeType ToNodeType(this string value)
-        {
-            return (NodeType) Enum.Parse(typeof(NodeType), value);
         }
     }
 }

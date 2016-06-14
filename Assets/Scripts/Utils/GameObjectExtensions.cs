@@ -15,11 +15,23 @@ namespace Assets.Scripts.Utils
 			gameObject.transform.parent = parent.transform;
 		}
 
-	    public static bool IsGraphNode(this GameObject gameObject)
-	    {
-	        return gameObject.CompareTag(NodeType.Organisation.ToString()) ||
-	               gameObject.CompareTag(NodeType.Product.ToString()) ||
-	               gameObject.CompareTag(NodeType.Person.ToString());
-	    }
+		public static void SetSize(this GameObject gameObject, float size)
+		{
+			gameObject.transform.localScale = new Vector3(size, size, size);
+		}
+
+		public static void SetColor(this GameObject gameObject, Color color)
+		{
+			gameObject.GetComponent<MeshRenderer>().material.color = color;
+		}
+
+		public static bool IsGraphNode(this GameObject gameObject)
+		{
+			return
+				gameObject.CompareTag("node") ||
+				gameObject.CompareTag(NodeType.Organisation.ToString()) ||
+				gameObject.CompareTag(NodeType.Product.ToString()) ||
+				gameObject.CompareTag(NodeType.Person.ToString());
+		}
 	}
 }
