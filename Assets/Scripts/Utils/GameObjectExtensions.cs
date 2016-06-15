@@ -33,5 +33,24 @@ namespace Assets.Scripts.Utils
 				gameObject.CompareTag(NodeType.Product.ToString()) ||
 				gameObject.CompareTag(NodeType.Person.ToString());
 		}
+
+		public static int DisplayNodeLabel(this GameObject node, int fontSize)
+		{
+			var label = node.transform.FindChild("label").gameObject;
+			label.SetActive(true);
+
+		    var textMesh = label.GetComponent<TextMesh>();
+		    var originaFontSize = textMesh.fontSize;
+		    textMesh.fontSize = fontSize;
+
+		    return originaFontSize;
+		}
+
+		public static void HideNodeLabel(this GameObject node, int originalFontSize)
+		{
+			var label = node.transform.FindChild("label").gameObject;
+			label.SetActive(false);
+            label.GetComponent<TextMesh>().fontSize = originalFontSize;
+        }
 	}
 }

@@ -28,7 +28,7 @@ namespace Assets.Scripts
         {
             var nodesRawData = _nodeDataReader.Read();
             Nodes = _graphGenerator.GenerateNodes(nodesRawData);
-            Labels = _graphGenerator.GenerateNodeLabels(Nodes);
+            Labels = _graphGenerator.GenerateNodeLabels(Nodes, false);
 
             LoadSeries1();
         }

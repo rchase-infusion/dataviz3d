@@ -7,6 +7,7 @@ namespace Assets.Scripts.Interactions
     {
         [SerializeField]
         private InitializeGraphV2 _graph;
+        private bool _lastToggleValue = true;
 
         private void Start()
         {
@@ -28,8 +29,10 @@ namespace Assets.Scripts.Interactions
         {            
             foreach (var label in _graph.Labels)
             {
-                label.SetActive(!label.activeSelf);
+                label.SetActive(_lastToggleValue);
             }
+
+            _lastToggleValue = !_lastToggleValue;
         }
     }
 }

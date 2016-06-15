@@ -11,7 +11,7 @@ namespace Assets.Scripts.Nodes
     {
         IEnumerable<GameObject> GenerateNodes(IEnumerable<NodeRawDataV2> rowData);
         void GenerateEdges(IEnumerable<GameObject> nodes, IEnumerable<EdgeRawDataV2> rowData);
-        IEnumerable<GameObject> GenerateNodeLabels(IEnumerable<GameObject> nodes);
+        IEnumerable<GameObject> GenerateNodeLabels(IEnumerable<GameObject> nodes, bool enabledByDefault);
     }
 
     public class GraphGeneratorV2 : IGraphGeneratorV2
@@ -42,9 +42,9 @@ namespace Assets.Scripts.Nodes
             }
         }
 
-        public IEnumerable<GameObject> GenerateNodeLabels(IEnumerable<GameObject> nodes)
+        public IEnumerable<GameObject> GenerateNodeLabels(IEnumerable<GameObject> nodes, bool enabledByDefault)
         {
-            return nodes.Select(data => GenerateLabel(data)).ToList();
+            return nodes.Select(data => GenerateLabel(data, enabledByDefault    )).ToList();
         }
 
         private GameObject GenerateNode(NodeRawDataV2 nodeRawData)
@@ -65,9 +65,13 @@ namespace Assets.Scripts.Nodes
             return gameObject;
         }
 
-        private GameObject GenerateLabel(GameObject parentGameObject)
+        private GameObject GenerateLabel(GameObject parentGameObject, bool enabledByDefault)
         {
             var label = MonoBehaviour.Instantiate(Resources.Load("node_label")) as GameObject;
+
+            if (!enabledByDefault)
+                label.SetActive(false);
+
             var textMesh = label.GetComponent<TextMesh>();
             label.SetParent(parentGameObject);
             label.name = "label";

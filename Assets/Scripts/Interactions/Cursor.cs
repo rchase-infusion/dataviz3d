@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utils;
+﻿using System;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts.Interactions
@@ -10,11 +11,14 @@ namespace Assets.Scripts.Interactions
         private MeshRenderer _meshRenderer;
         private GameObject _currentlySelectedNode;
         private Material _currentlySelectedNodeOriginalMaterial;
+        private int _currentlySelectNodeOriginalLabelSize;
 
-        [Tooltip("The material applied to the currently selected node. Defaults to 'SelectedNodeMaterial asset from the Resources folder' if not set")]
+        [Tooltip("The material applied to the currently selected node. Defaults to 'SelectedNodeMaterial' asset from the Resources folder if not set")]
         public Material SelectedNodeMaterial;
         public float MaxHitDetectionDistance;
         public Color HoverColor;
+
+        public int SelectedNodeLabelSize = 50;
         
         void Start()
         {
@@ -61,6 +65,8 @@ namespace Assets.Scripts.Interactions
 
             _currentlySelectedNodeOriginalMaterial = meshRenderer.material;
             meshRenderer.material = SelectedNodeMaterial;
+            
+            _currentlySelectNodeOriginalLabelSize = _currentlySelectedNode.DisplayNodeLabel(SelectedNodeLabelSize);
         }
 
         private void ResetSelectedNode()
@@ -70,6 +76,7 @@ namespace Assets.Scripts.Interactions
 
             var meshRenderer = _currentlySelectedNode.GetComponent<MeshRenderer>();
             meshRenderer.material = _currentlySelectedNodeOriginalMaterial;
+            _currentlySelectedNode.HideNodeLabel(_currentlySelectNodeOriginalLabelSize);
 
             _currentlySelectedNode = null;
         }

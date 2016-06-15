@@ -67,7 +67,7 @@ namespace HoloToolkit.Unity
                     // No changes needed.
                     break;
             }
-
+            
             // Calculate and apply the rotation required to reorient the object and apply the default rotation to the result.
             gameObject.transform.rotation = Quaternion.LookRotation(-directionToTarget) * DefaultRotation;
         }
