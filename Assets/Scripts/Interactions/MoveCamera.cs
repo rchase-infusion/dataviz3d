@@ -13,11 +13,8 @@ namespace Assets.Scripts.Interactions
         public float StrafeSpeed = 10;
         [Tooltip("Speed at which the camera moves forward/backward.")]
         public float MoveSpeed = 10;
-
-        private void Start()
-        { }
-
-        void Update()
+        
+        private void Update()
         {
             if (Input.GetMouseButton(1))
             {

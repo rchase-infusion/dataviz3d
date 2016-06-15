@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Edges
 {
-    public class EdgeDataReaderV2 : IEdgeDataReaderV2
+    public class EdgeDataReader : IEdgeDataReader
     {
-        public IEnumerable<EdgeRawDataV2> Read(string filename)
+        public IEnumerable<EdgeRawData> Read(string filename)
         {
-            var results = new List<EdgeRawDataV2>();
+            var results = new List<EdgeRawData>();
 
             // Had to change to this read method because the standard StreamReader is not allowed in UWP apps!
             TextAsset graphDataFile = (TextAsset) Resources.Load(filename, typeof(TextAsset));
@@ -24,11 +24,11 @@ namespace Assets.Scripts.Edges
             return results;
         }
 
-        private EdgeRawDataV2 ToEdgeRawData(string line)
+        private EdgeRawData ToEdgeRawData(string line)
         {
             var fields = line.Split(';');
 
-            var edgeRawData = new EdgeRawDataV2()
+            var edgeRawData = new EdgeRawData()
             {
                 Id = fields[0].ToInt(),
                 Name = fields[1],

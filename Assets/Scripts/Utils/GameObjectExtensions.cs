@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Nodes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Utils
 {
@@ -25,18 +24,20 @@ namespace Assets.Scripts.Utils
 			gameObject.GetComponent<MeshRenderer>().material.color = color;
 		}
 
+		/// <summary>
+		/// Determines whether the current object is a node or not.
+		/// </summary>
 		public static bool IsGraphNode(this GameObject gameObject)
 		{
-			return
-				gameObject.CompareTag("node") ||
-				gameObject.CompareTag(NodeType.Organisation.ToString()) ||
-				gameObject.CompareTag(NodeType.Product.ToString()) ||
-				gameObject.CompareTag(NodeType.Person.ToString());
+			return gameObject.CompareTag(Tags.Node);
 		}
 
+		/// <summary>
+		/// Displays the label on a node and returns its original font size so it can be restored later on.
+		/// </summary>
 		public static int DisplayNodeLabel(this GameObject node, int fontSize)
 		{
-			var label = node.transform.FindChild("label").gameObject;
+			var label = node.transform.FindChild(Constants.NodeLabelGameObjectName).gameObject;
 			label.SetActive(true);
 
 			var textMesh = label.GetComponent<TextMesh>();
@@ -46,16 +47,22 @@ namespace Assets.Scripts.Utils
 			return originaFontSize;
 		}
 
+		/// <summary>
+		/// Hides the label on a node and restore its original font size.
+		/// </summary>
 		public static void HideNodeLabel(this GameObject node, int originalFontSize)
 		{
-			var label = node.transform.FindChild("label").gameObject;
+			var label = node.transform.FindChild(Constants.NodeLabelGameObjectName).gameObject;
 			label.SetActive(false);
 			label.GetComponent<TextMesh>().fontSize = originalFontSize;
 		}
 
+		/// <summary>
+		/// Restores the original font size of a node label
+		/// </summary>
 		public static void RestoreOriginalNodeLabelSize(this GameObject node, int originalFontSize)
 		{
-			var label = node.transform.FindChild("label").gameObject;
+			var label = node.transform.FindChild(Constants.NodeLabelGameObjectName).gameObject;
 			label.GetComponent<TextMesh>().fontSize = originalFontSize;
 		}
 	}

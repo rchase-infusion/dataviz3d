@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.SceneUtilities;
-using HoloToolkit.Unity;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
@@ -12,19 +11,19 @@ namespace Assets.Scripts.Interactions
     public class VoiceCommandsManager : MonoBehaviour
     {
         private KeywordRecognizer _keywordRecognizer;
-        private Dictionary<string, System.Action> _commands;
+        private Dictionary<string, Action> _commands;
         private AudioSource _audioSource;
         
         public ResetScene ResetScene;
-        public InitializeGraphV2 Graph;
+        public InitializeGraph Graph;
         public ToggleLabels ToggleLabels;
-
+        
         private void Start()
         {
             if (ResetScene == null)
                 throw new NullReferenceException("[VoiceCommandsManager.Start] Reference to ResetScene not set!");
             if (Graph == null)
-                throw new NullReferenceException("[VoiceCommandsManager.Start] Reference to InitializeGraphV2 not set!");
+                throw new NullReferenceException("[VoiceCommandsManager.Start] Reference to InitializeGraph not set!");
             if (ToggleLabels == null)
                 throw new NullReferenceException("[VoiceCommandsManager.Start] Reference to ToggleLabels not set!");
 
@@ -45,14 +44,14 @@ namespace Assets.Scripts.Interactions
                 ToggleLabels.Toggle();
             });
 
-            // Toggle labels
+            // Load first series of edges
             _commands.Add("Series one", () =>
             {
                 _audioSource.Play();
                 Graph.LoadSeries1();
             });
 
-            // Toggle labels
+            // Load second series of edges
             _commands.Add("Series two", () =>
             {
                 _audioSource.Play();

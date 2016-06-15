@@ -1,9 +1,14 @@
-﻿namespace Assets.Scripts.Edges
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Edges
 {
     public class EdgeRawData
     {
-        public int NodeId { get; set; }
-        public string Type { get; set; }
-        public float Data { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int ParentNodeId { get; set; }
+        public int ChildNodeId { get; set; }
+        public Color Color { get; set; }
+        public float Thickness { get; set; }
     }
 }

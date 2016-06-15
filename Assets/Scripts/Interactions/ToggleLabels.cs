@@ -5,11 +5,13 @@ namespace Assets.Scripts.Interactions
 {
     public class ToggleLabels : MonoBehaviour
     {
-        [SerializeField] private InitializeGraphV2 _graph;
+        [SerializeField] private InitializeGraph _graph;
         [SerializeField] private Cursor _cursor;
 
         private bool _lastToggleValue = true;
-        
+        /// <summary>
+        /// Determine whether the node labels are currently displayed or not.
+        /// </summary>
         public bool AreLabelsDisplayed { get { return !_lastToggleValue; } }
 
         private void Start()

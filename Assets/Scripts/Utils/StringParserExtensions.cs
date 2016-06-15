@@ -1,5 +1,4 @@
 ﻿using System;
-using Assets.Scripts.Nodes;
 using UnityEngine;
 
 namespace Assets.Scripts.Utils
@@ -9,11 +8,6 @@ namespace Assets.Scripts.Utils
 		public static int ToInt(this string value)
 		{
 			return Int32.Parse(value);
-		}
-
-		public static NodeType ToNodeType(this string value)
-		{
-			return (NodeType) Enum.Parse(typeof(NodeType), value);
 		}
 
 		public static Vector3 ToVector3(this string value)
