@@ -39,18 +39,24 @@ namespace Assets.Scripts.Utils
 			var label = node.transform.FindChild("label").gameObject;
 			label.SetActive(true);
 
-		    var textMesh = label.GetComponent<TextMesh>();
-		    var originaFontSize = textMesh.fontSize;
-		    textMesh.fontSize = fontSize;
+			var textMesh = label.GetComponent<TextMesh>();
+			var originaFontSize = textMesh.fontSize;
+			textMesh.fontSize = fontSize;
 
-		    return originaFontSize;
+			return originaFontSize;
 		}
 
 		public static void HideNodeLabel(this GameObject node, int originalFontSize)
 		{
 			var label = node.transform.FindChild("label").gameObject;
 			label.SetActive(false);
-            label.GetComponent<TextMesh>().fontSize = originalFontSize;
-        }
+			label.GetComponent<TextMesh>().fontSize = originalFontSize;
+		}
+
+		public static void RestoreOriginalNodeLabelSize(this GameObject node, int originalFontSize)
+		{
+			var label = node.transform.FindChild("label").gameObject;
+			label.GetComponent<TextMesh>().fontSize = originalFontSize;
+		}
 	}
 }

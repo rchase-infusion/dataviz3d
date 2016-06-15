@@ -12,13 +12,16 @@ namespace Assets.Scripts.Interactions
         private GameObject _currentlySelectedNode;
         private Material _currentlySelectedNodeOriginalMaterial;
         private int _currentlySelectNodeOriginalLabelSize;
-
+        
         [Tooltip("The material applied to the currently selected node. Defaults to 'SelectedNodeMaterial' asset from the Resources folder if not set")]
         public Material SelectedNodeMaterial;
+        public ToggleLabels ToggleLabels;
+
         public float MaxHitDetectionDistance;
         public Color HoverColor;
-
         public int SelectedNodeLabelSize = 50;
+
+        public GameObject CurrentlySelectedNodeLabel { get; private set; }
         
         void Start()
         {
@@ -61,8 +64,10 @@ namespace Assets.Scripts.Interactions
         private void SetSelectedNode(GameObject selectedGameObject)
         {
             _currentlySelectedNode = selectedGameObject;
-            var meshRenderer = _currentlySelectedNode.GetComponent<MeshRenderer>();
+            CurrentlySelectedNodeLabel = selectedGameObject.transform.FindChild("label").gameObject;
 
+            var meshRenderer = _currentlySelectedNode.GetComponent<MeshRenderer>();
+            
             _currentlySelectedNodeOriginalMaterial = meshRenderer.material;
             meshRenderer.material = SelectedNodeMaterial;
             
@@ -76,9 +81,14 @@ namespace Assets.Scripts.Interactions
 
             var meshRenderer = _currentlySelectedNode.GetComponent<MeshRenderer>();
             meshRenderer.material = _currentlySelectedNodeOriginalMaterial;
-            _currentlySelectedNode.HideNodeLabel(_currentlySelectNodeOriginalLabelSize);
+
+            if (!ToggleLabels.AreLabelsDisplayed)
+                _currentlySelectedNode.HideNodeLabel(_currentlySelectNodeOriginalLabelSize);
+            else
+                _currentlySelectedNode.RestoreOriginalNodeLabelSize(_currentlySelectNodeOriginalLabelSize);
 
             _currentlySelectedNode = null;
+            CurrentlySelectedNodeLabel = null;
         }
     }
 }
