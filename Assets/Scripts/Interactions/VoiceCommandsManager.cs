@@ -45,6 +45,20 @@ namespace Assets.Scripts.Interactions
                 ToggleLabels.Toggle();
             });
 
+            // Toggle labels
+            _commands.Add("Series one", () =>
+            {
+                _audioSource.Play();
+                Graph.LoadSeries1();
+            });
+
+            // Toggle labels
+            _commands.Add("Series two", () =>
+            {
+                _audioSource.Play();
+                Graph.LoadSeries2();
+            });
+
             // Initialize the keyword recognizer
             _keywordRecognizer = new KeywordRecognizer(_commands.Keys.ToArray());
             _keywordRecognizer.OnPhraseRecognized += CallCommand;
