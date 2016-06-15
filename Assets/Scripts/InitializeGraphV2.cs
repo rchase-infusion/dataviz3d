@@ -11,13 +11,15 @@ namespace Assets.Scripts
         private IEdgeDataReaderV2 _edgeDataReader;
         private IGraphGeneratorV2 _graphGenerator;
 
-        private IEnumerable<GameObject> _nodes; 
+        public IEnumerable<GameObject> Nodes { get; private set; }
+        public IEnumerable<GameObject> Labels { get; private set; }
 
         void Start()
         {
             _nodeDataReader = new NodeDataReaderV2();
             _edgeDataReader = new EdgeDataReaderV2();
             _graphGenerator = new GraphGeneratorV2(GameObject.Find("NODES"), GameObject.Find("EDGES"));
+            Labels = new List<GameObject>();
 
             Initialize();
         }
@@ -25,16 +27,23 @@ namespace Assets.Scripts
         private void Initialize()
         {
             var nodesRawData = _nodeDataReader.Read();
-            _nodes = _graphGenerator.GenerateNodes(nodesRawData);
+            Nodes = _graphGenerator.GenerateNodes(nodesRawData);
+            Labels = _graphGenerator.GenerateNodeLabels(Nodes);
 
             LoadSeries1();
         }
 
+        /// <summary>
+        /// Method called on click on 'Load Series 1' button
+        /// </summary>
         public void LoadSeries1()
         {
             LoadSeries("graph_data_edges_series_1");
         }
 
+        /// <summary>
+        /// Method called on click on 'Load Series 2' button
+        /// </summary>
         public void LoadSeries2()
         {
             LoadSeries("graph_data_edges_series_2");
@@ -45,7 +54,7 @@ namespace Assets.Scripts
             ClearAllEdges();
             
             var edgesRawData = _edgeDataReader.Read(filename);
-            _graphGenerator.GenerateEdges(_nodes, edgesRawData);
+            _graphGenerator.GenerateEdges(Nodes, edgesRawData);
         }
 
         private void ClearAllEdges()

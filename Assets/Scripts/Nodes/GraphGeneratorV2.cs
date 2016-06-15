@@ -11,6 +11,7 @@ namespace Assets.Scripts.Nodes
     {
         IEnumerable<GameObject> GenerateNodes(IEnumerable<NodeRawDataV2> rowData);
         void GenerateEdges(IEnumerable<GameObject> nodes, IEnumerable<EdgeRawDataV2> rowData);
+        IEnumerable<GameObject> GenerateNodeLabels(IEnumerable<GameObject> nodes);
     }
 
     public class GraphGeneratorV2 : IGraphGeneratorV2
@@ -41,6 +42,11 @@ namespace Assets.Scripts.Nodes
             }
         }
 
+        public IEnumerable<GameObject> GenerateNodeLabels(IEnumerable<GameObject> nodes)
+        {
+            return nodes.Select(data => GenerateLabel(data)).ToList();
+        }
+
         private GameObject GenerateNode(NodeRawDataV2 nodeRawData)
         {
             var resourceName = "node_" + nodeRawData.Shape;
@@ -59,6 +65,27 @@ namespace Assets.Scripts.Nodes
             return gameObject;
         }
 
+        private GameObject GenerateLabel(GameObject parentGameObject)
+        {
+            var label = MonoBehaviour.Instantiate(Resources.Load("node_label")) as GameObject;
+            var textMesh = label.GetComponent<TextMesh>();
+            label.SetParent(parentGameObject);
+            label.name = "label";
+
+            // Calculate position
+            var parentPosition = parentGameObject.transform.position;
+            var parentScale = parentGameObject.transform.localScale;
+            var labelPosition = new Vector3(
+                parentPosition.x + (parentScale.x / 2) + 0.01f,
+                parentPosition.y + (parentScale.y / 2) + 0.01f,
+                parentPosition.z);
+            
+            label.SetPosition(labelPosition);
+            textMesh.text = parentGameObject.GetComponent<NodeV2>().Name;
+
+            return label;
+        }
+
         private void GenerateEdge(EdgeRawDataV2 rowData, GameObject parent, GameObject child)
         {
             var edgeGameObject = new GameObject(FormatEdgeName(rowData.Id, parent, child));
@@ -73,12 +100,12 @@ namespace Assets.Scripts.Nodes
 
         private string FormatNodeName(NodeV2 node)
         {
-            return node.Id + " - " + node.Name;
+            return String.Format("[{0}] {1}", node.Id, node.Name);
         }
 
         private string FormatEdgeName(int edgeId, GameObject parent, GameObject child)
         {
-            return String.Format("{0}: {1} -> {2}", edgeId, parent.name, child.name);
+            return String.Format("[{0}] {1} -> {2}", edgeId, parent.name, child.name);
         }
 
         private GameObject FindNode(IEnumerable<GameObject> nodes, int nodeId)
