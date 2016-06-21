@@ -45,17 +45,10 @@ namespace Assets.Scripts.Interactions
             });
 
             // Load first series of edges
-            _commands.Add("Series one", () =>
+            _commands.Add("Next Series", () =>
             {
                 _audioSource.Play();
-                Graph.LoadSeries1();
-            });
-
-            // Load second series of edges
-            _commands.Add("Series two", () =>
-            {
-                _audioSource.Play();
-                Graph.LoadSeries2();
+                Graph.LoadNextSeries();
             });
 
             // Initialize the keyword recognizer

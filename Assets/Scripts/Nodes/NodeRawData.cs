@@ -11,5 +11,16 @@ namespace Assets.Scripts.Nodes
         public Color Color { get; set; }
         public string Shape { get; set; }
         public Vector3 Position { get; set; }
+
+        public NodeRawData(int id, string name, string description, float size, Color color, string shape, Vector3 position)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Size = size;
+            Color = color;
+            Shape = shape;
+            Position = position;
+        }
     }
 }
